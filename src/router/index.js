@@ -1,8 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Main from "@/layouts/Main.vue";
+import Dashboard from "@/pages/Dashboard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
+  routes: [
+    {
+      path: "/",
+      component: Main,
+      name: "Main",
+      children:[
+        {
+          path:'',
+          component:Dashboard,
+          name:'Dashboard'
+
+        }
+      ]
+    },
+  ],
 });
 
 //   router.beforeEach((to, from, next) => {
