@@ -18,25 +18,31 @@ const router = createRouter({
         }
       ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/pages/Login.vue') 
+    }
+    
   ],
 });
 
-//   router.beforeEach((to, from, next) => {
-//     const accessToken = localStorage.getItem("access_token");
+  router.beforeEach((to, from, next) => {
+    const accessToken = localStorage.getItem("access_token");
 
-//     // document.title = to.meta.title || "Авторизоваться";
+    // document.title = to.meta.title || "Авторизоваться";
 
-//     if (to.name === "login" || to.name === 'regis' || to.name === 'vklogin') {
-//       return next();
-//     }
+    if (to.name === "login") {
+      return next();
+    }
 
-//     if (accessToken) {
-//       return next();
-//     } else {
-//       return next({
-//         name: "login"
-//       });
-//     }
-//   });
+    if (accessToken) {
+      return next();
+    } else {
+      return next({
+        name: "login"
+      });
+    }
+  });
 
 export default router;

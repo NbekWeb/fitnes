@@ -1,0 +1,54 @@
+<script setup>
+defineProps({
+  data: {
+    type: Object,
+    required: true,
+    default: () => ({
+      image: "",
+      title: "",
+      description: "",
+      progress: 0,
+    }),
+  },
+});
+</script>
+
+<template>
+  <div class="bg-dark-310 p-2.5 cursor-pointer rounded-xl flex gap-2">
+    <img class="w-26 h-26 object-cover rounded-lg" :src="data.image" />
+
+    <div class="flex h-full flex-col justify-between flex-1">
+      <div class="flex flex-col gap-1.5 text-sm">
+        <h3 class="font-medium">{{ data.title }}</h3>
+        <p class="text-xs opacity-70">{{ data.description }}</p>
+      </div>
+
+      <div class="h-7x grid gap-1 grid-cols-3 items-center text-min mt-2">
+        <button
+          class="p-1.5 h-full w-full flex items-center justify-center rounded-2xl uppercase text-white bg-blue-500"
+        >
+          Открыть
+        </button>
+
+        <div
+          class="rounded-2xl bg-dark-310 relative h-full p-0 flex bg-transparent border border-blue-500"
+        >
+          <span
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >{{ data.progress }}%</span
+          >
+          <div
+            class="bg-blue-500 rounded-l-2xl h-full"
+            :style="{ width: data.progress + '%' }"
+          ></div>
+        </div>
+
+        <button
+          class="p-1.5 h-full w-full flex items-center justify-center rounded-2xl uppercase text-white bg-dark-420"
+        >
+          Подробнее
+        </button>
+      </div>
+    </div>
+  </div>
+</template>

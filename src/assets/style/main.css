@@ -2,14 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    color: #fff;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* color: #fff; */
 }
 
-a{
-    text-decoration: none;
-    color: inherit;
+a {
+  text-decoration: none;
+  color: inherit;
 }
+
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-title,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-paragraph
+  > li,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-avatar,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-button,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-input,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-image {
+  background: #151515;
+}
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton
+  .ant-skeleton-content
+  .ant-skeleton-paragraph
+  > li
+  + li {
+  margin-block-start: 4px;
+}
+
+.ant-skeleton.ant-skeleton-active .ant-skeleton-title::after,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-paragraph
+  > li::after,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-avatar::after,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-button::after,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-input::after,
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-skeleton.ant-skeleton-active
+  .ant-skeleton-image::after {
+  background-image: linear-gradient(
+    90deg,
+    rgba(21, 21, 21, 0) 30%,
+    rgba(80, 80, 80, 0.2) 50%,
+    rgba(21, 21, 21, 0) 75%
+  ) !important;
+}
+.ant-spin .ant-spin-dot-item{
+  background-color: #14429D;
+}
+
