@@ -9,10 +9,14 @@ defineProps({
       link: "",
     }),
   },
-  border:{
-    type:Boolean,
-    default:false
-  }
+  border: {
+    type: Boolean,
+    default: false,
+  },
+  show: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["action"]);
@@ -24,7 +28,7 @@ function goAction() {
   <div
     @click="goAction"
     class="bg-black border-dark-270 p-2 rounded-lg flex justify-between items-center"
-    :class="border&&'border-t-2'"
+    :class="[border && 'border-t-2']"
   >
     <div class="flex items-center gap-2.5">
       <div class="p-1 text-white/60 bg-dark-270 rounded text-2xl">
@@ -34,6 +38,9 @@ function goAction() {
         {{ data.label }}
       </span>
     </div>
-    <chevron class="opacity-50 text-2xl"/>
+    <chevron
+      class="opacity-50 text-2xl transition duration-300"
+      :class="show && 'rotate-90'"
+    />
   </div>
 </template>
