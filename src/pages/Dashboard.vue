@@ -66,7 +66,6 @@ onMounted(() => {
 
   auth.getUser(() => {
     if (premium) {
-      console.log(user.value.id);
       coursePinia.checkPremium(
         {
           object: {

@@ -3,13 +3,11 @@ import { onMounted } from "vue";
 onMounted(() => {
   const tg = window.Telegram.WebApp;
   const initData = tg.initData;
-  console.log(initData);
-  // const params = new URLSearchParams(initData);
-  // const referral_code = params.get("start_param") || "";
+  // console.log(initData);
 
-  // loginPinia.postLogin({ initData, referral_code }, () => {
-  //   router.push({ name: "Earn" });
-  // });
+  loginPinia.postLogin({ initData }, () => {
+    router.push({ name: "Dashboard" });
+  });
 });
 </script>
 
