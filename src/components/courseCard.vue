@@ -22,10 +22,10 @@ function join(id) {
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
     localStorage.setItem("premium", id);
+    window.open(url);
     if (window.Telegram && Telegram.WebApp) {
       Telegram.WebApp.close();
     }
-    window.open(url);
   });
 }
 function goCourse(id = 0) {
