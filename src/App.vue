@@ -1,13 +1,16 @@
 <script setup>
 import { onMounted } from "vue";
+import useAuth from "./stores/auth.pinia";
+
+const loginPinia = useAuth();
 onMounted(() => {
   const tg = window.Telegram.WebApp;
   const initData = tg.initData;
   // console.log(initData);
-
-  loginPinia.postLogin({ initData }, () => {
-    router.push({ name: "Dashboard" });
-  });
+  if (!localStorage.getItem("access_token"))
+    loginPinia.postLogin({ initData }, () => {
+      router.push({ name: "Dashboard" });
+    });
 });
 </script>
 

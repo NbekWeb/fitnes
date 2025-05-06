@@ -74,7 +74,7 @@ onMounted(() => {
           event: "payment.succeeded",
         },
         () => {
-          localStorage.removeItem("premium")
+          localStorage.removeItem("premium");
         }
       );
     }
@@ -102,15 +102,17 @@ onMounted(() => {
         <div class="py-3" :class="less && 'hidden'">
           <Swiper :slides-per-view="1.5" :space-between="20" class="rounded-lg">
             <template v-for="i in recomendations">
-              <SwiperSlide
-                class="bg-transparent"
-                @click="goCourse(i.id, i.you_tube)"
-              >
-                <img
-                  :src="i.image"
-                  class="h-auto w-full object-contain rounded-xl"
-                />
-              </SwiperSlide>
+              <template v-if="!i?.price">
+                <SwiperSlide
+                  class="bg-transparent"
+                  @click="goCourse(i.id, i.you_tube)"
+                >
+                  <img
+                    :src="i.image"
+                    class="h-auto w-full object-contain rounded-xl"
+                  />
+                </SwiperSlide>
+              </template>
             </template>
           </Swiper>
         </div>
