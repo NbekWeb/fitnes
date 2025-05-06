@@ -74,7 +74,9 @@ onMounted(() => {
           event: "payment.succeeded",
         },
         () => {
-          localStorage.removeItem("premium");
+          coursePinia.postCourse({ course: premium }, () => {
+            localStorage.removeItem("premium");
+          });
         }
       );
     }
