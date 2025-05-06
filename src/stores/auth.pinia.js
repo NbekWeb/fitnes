@@ -23,7 +23,7 @@ const useAuth = defineStore("auth", {
         })
         .finally(() => {});
     },
-    getUser() {
+    getUser(callback) {
       const core = useCore();
       core.loadingUrl.add("user");
       api({
@@ -32,6 +32,7 @@ const useAuth = defineStore("auth", {
       })
         .then(({ data }) => {
           this.user = data;
+          callback(data.id)
         })
         .catch((error) => {
           message.error("Что-то пошло не так!");

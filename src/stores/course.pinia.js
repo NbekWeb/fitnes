@@ -152,6 +152,43 @@ const useCourse = defineStore("course", {
           core.loadingUrl.delete("course/user/");
         });
     },
+    postPremium(data, callback) {
+      const core = useCore();
+      core.loadingUrl.add("payment/create/");
+      api({
+        url: "payment/create/",
+        method: "POST",
+        data,
+      })
+        .then(({ data }) => {
+          callback(data?.confirmation_url);
+        })
+        .catch((error) => {
+          message.error("Что-то пошло не так!");
+        })
+        .finally(() => {
+          core.loadingUrl.delete("payment/create/");
+        });
+    },
+    checkPremium(data, callback) {
+      const core = useCore();
+      core.loadingUrl.add("payment/hook/");
+      api({
+        url: "payment/hook/",
+        method: "POST",
+        data,
+      })
+        .then(({ data }) => {
+          message.success('Курс успешно приобретён!')
+          callback()
+        })
+        .catch((error) => {
+          message.error("Что-то пошло не так!");
+        })
+        .finally(() => {
+          core.loadingUrl.delete("payment/hook/");
+        });
+    },
   },
 });
 

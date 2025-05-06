@@ -21,6 +21,7 @@ const router = useRouter();
 
 const { recomendations, courseDashoard } = storeToRefs(coursePinia);
 const { loadingUrl } = storeToRefs(core);
+const { user } = storeToRefs(auth);
 
 const less = ref(false);
 const selectedCourse = ref("my");
@@ -61,7 +62,24 @@ function changeCourse(val) {
 }
 
 onMounted(() => {
-  auth.getUser();
+  const premium = localStorage.getItem("premium");
+
+  auth.getUser(() => {
+    if (premium) {
+      console.log(user.value.id);
+      coursePinia.checkPremium(
+        {
+          object: {
+            metadata: { user_id: user.value.id, course_id: premium },
+          },
+          event: "payment.succeeded",
+        },
+        () => {
+          localStorage.removeItem("premium")
+        }
+      );
+    }
+  });
   coursePinia.getRecomendation();
   coursePinia.getCourseAll();
   coursePinia.getCourseUser();

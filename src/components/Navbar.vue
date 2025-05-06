@@ -12,6 +12,8 @@ function goTo(val = "main") {
     router.push({ name: "Dashboard" });
   } else if (val == "tg") {
     window.open("https://t.me/arzumanov_r", "_blank");
+  } else if (val == "more") {
+    router.push({ name: "More" });
   } else {
     router.push({ name: "Dashboard" });
   }

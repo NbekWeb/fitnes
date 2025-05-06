@@ -73,7 +73,7 @@ onMounted(() => {
         <p>
           {{ lesson.title }}
         </p>
-        <div v-if="lesson?.video_section?.length">
+        <div v-if="lesson?.video_section?.length&&lesson?.video_section?.[0]?.timestamp">
           <div
             @click="toggleTime"
             class="flex font-semibold items-center gap-2 text-base"

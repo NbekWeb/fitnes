@@ -19,6 +19,12 @@ const onClose = () => {
 function join(id) {
   course.postCourse({ course: id }, () => {});
 }
+function joinPremium(id) {
+  course.postPremium({ course_id: id }, (url) => {
+    localStorage.setItem("premium", id);
+    window.open(url);
+  });
+}
 function goCourse(id = 0) {
   router.push({ name: "Course", params: { id } });
 }
@@ -42,7 +48,7 @@ defineProps({
 <template>
   <div class="bg-dark-310 p-2.5 cursor-pointer rounded-xl flex gap-2">
     <img class="w-26 h-26 object-cover rounded-lg" :src="data.image" />
-    
+
     <div class="flex h-full flex-col justify-between flex-1">
       <div class="flex flex-col gap-1.5 text-sm">
         <h3 class="font-medium">{{ data.name }}</h3>
@@ -68,22 +74,29 @@ defineProps({
           >
             <span
               class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-             
               >{{ data.progress }}%</span
             >
             <div
               class="bg-blue-500 rounded-l-2xl h-full"
-               :class="data.progress==100&&'rounded-r-2xl'"
+              :class="data.progress == 100 && 'rounded-r-2xl'"
               :style="{ width: data.progress + '%' }"
             ></div>
           </div>
         </template>
         <template v-else>
           <button
+            v-if="!data.price"
             @click="join(data.id)"
             class="py-1.5 px-2 h-full min-w-max flex-grow flex items-center justify-center rounded-2xl uppercase text-white bg-blue-500"
           >
             ЗАБРАТЬ БЕСПЛАТНО
+          </button>
+          <button
+            v-else
+            @click="joinPremium(data.id)"
+            class="py-1.5 px-2 h-full min-w-max flex-grow flex items-center justify-center rounded-2xl uppercase text-white bg-blue-500"
+          >
+            ОПЛАТИТЬ — {{ data.price }} ₽
           </button>
         </template>
         <button
