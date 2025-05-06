@@ -146,8 +146,7 @@ const useCourse = defineStore("course", {
           callback();
         })
         .catch((error) => {
-          message.error("Что-то пошло не так!");
-        })
+          })
         .finally(() => {
           core.loadingUrl.delete("course/user/");
         });
