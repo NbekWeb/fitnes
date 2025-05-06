@@ -43,6 +43,36 @@ const useCourse = defineStore("course", {
           core.loadingUrl.delete("course/all/");
         });
     },
+    getCourseFree() {
+      const core = useCore();
+      core.loadingUrl.add("courseDashoard");
+      api({
+        url: "course/free/",
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.courseDashoard = data?.results;
+        })
+        .catch((error) => {})
+        .finally(() => {
+          core.loadingUrl.delete("courseDashoard");
+        });
+    },
+    getCoursePremium() {
+      const core = useCore();
+      core.loadingUrl.add("courseDashoard");
+      api({
+        url: "course/premium/",
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.courseDashoard = data?.results;
+        })
+        .catch((error) => {})
+        .finally(() => {
+          core.loadingUrl.delete("courseDashoard");
+        });
+    },
     getCourseUser() {
       const core = useCore();
       core.loadingUrl.add("courseDashoard");
@@ -51,7 +81,6 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
-          console.log(data.results);
           this.courseDashoard = data.results;
         })
         .catch((error) => {})
@@ -83,28 +112,28 @@ const useCourse = defineStore("course", {
         });
     },
     getLesson(id) {
-        const core = useCore();
-        core.loadingUrl.add("lesson/detaile/");
-        api({
-          url: `lesson/${id}/detaile/`,
-          method: "GET",
+      const core = useCore();
+      core.loadingUrl.add("lesson/detaile/");
+      api({
+        url: `lesson/${id}/detaile/`,
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.lesson = data;
         })
-          .then(({ data }) => {
-            this.lesson = data;
-          })
-          .catch((error) => {
-            const e = error?.response?.data;
-            if (e?.detail) {
-              message.error(e.detail);
-            } else {
-              message.error("Что-то пошло не так!");
-            }
-          })
-          .finally(() => {
-            core.loadingUrl.delete("lesson/detaile/");
-          });
-      },
-    
+        .catch((error) => {
+          const e = error?.response?.data;
+          if (e?.detail) {
+            message.error(e.detail);
+          } else {
+            message.error("Что-то пошло не так!");
+          }
+        })
+        .finally(() => {
+          core.loadingUrl.delete("lesson/detaile/");
+        });
+    },
+
     postCourse(data, callback) {
       const core = useCore();
       core.loadingUrl.add("course/user/");

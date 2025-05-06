@@ -19,7 +19,7 @@ const core = useCore();
 const coursePinia = useCourse();
 const router = useRouter();
 
-const { courseAll, recomendations, courseDashoard } = storeToRefs(coursePinia);
+const { recomendations, courseDashoard } = storeToRefs(coursePinia);
 const { loadingUrl } = storeToRefs(core);
 
 const less = ref(false);
@@ -30,12 +30,12 @@ const courses = [
     label: "Мои ",
   },
   {
-    val: "trenovka",
-    label: "Тренировки  ",
+    val: "free",
+    label: "Бесплатно  ",
   },
   {
-    val: "zaryadka",
-    label: "Зарядки  ",
+    val: "premium",
+    label: "Платно  ",
   },
 ];
 
@@ -51,6 +51,13 @@ function giveLess() {
 }
 function changeCourse(val) {
   selectedCourse.value = val;
+  if (val == "my") {
+    coursePinia.getCourseUser();
+  } else if (val == "free") {
+    coursePinia.getCourseFree();
+  } else {
+    coursePinia.getCoursePremium();
+  }
 }
 
 onMounted(() => {
@@ -58,8 +65,6 @@ onMounted(() => {
   coursePinia.getRecomendation();
   coursePinia.getCourseAll();
   coursePinia.getCourseUser();
-  coursePinia.getCourse(1);
-  coursePinia.getLesson(1);
 });
 </script>
 <template>
@@ -111,30 +116,38 @@ onMounted(() => {
         </template>
       </div>
       <div class="flex flex-col gap-2 pb-10">
-        <template v-if="!loadingUrl.has('courseDashoard')">
-          <template v-if="courseDashoard?.length != 0">
-            <courseCard
-              :data="item?.course"
-              v-for="(item, i) in courseDashoard"
-              :key="i"
-            />
-          </template>
-          <div
-            class="flex flex-col items-center gap-2.5 mt-4 text-sm"
-            v-else-if="selectedCourse == 'my'"
-          >
-            <span class="text-xl font-semibold">Список пуст </span>
-            <p class="opacity-90">
-              Совершите покупку или выберите бесплатный продукт!
-            </p>
-          </div>
-        </template>
-        <template>
+        <template v-if="loadingUrl.has('courseDashoard')">
           <courseSkelton v-for="i in 4" />
         </template>
+        <template v-if="courseDashoard?.length != 0">
+          <template v-for="(item, i) in courseDashoard">
+            <template
+              v-if="
+                selectedCourse == 'my'
+                  ? !item?.course?.you_tube
+                  : !item.you_tube
+              "
+            >
+              <courseCard
+                :data="selectedCourse == 'my' ? item?.course : item"
+              />
+            </template>
+          </template>
+        </template>
+        <div
+          class="flex flex-col items-center gap-2.5 mt-4 text-sm"
+          v-else-if="selectedCourse == 'my'"
+        >
+          <span class="text-xl font-semibold">Список пуст </span>
+          <p class="opacity-90">
+            Совершите покупку или выберите бесплатный продукт!
+          </p>
+        </div>
+        <div class="flex flex-col items-center gap-2.5 mt-4 text-sm" v-else>
+          <span class="text-xl font-semibold">Список пуст </span>
+        </div>
       </div>
     </div>
-   
   </div>
 </template>
 <style scoped></style>

@@ -42,7 +42,7 @@ defineProps({
 <template>
   <div class="bg-dark-310 p-2.5 cursor-pointer rounded-xl flex gap-2">
     <img class="w-26 h-26 object-cover rounded-lg" :src="data.image" />
-
+    
     <div class="flex h-full flex-col justify-between flex-1">
       <div class="flex flex-col gap-1.5 text-sm">
         <h3 class="font-medium">{{ data.name }}</h3>
@@ -52,9 +52,7 @@ defineProps({
       <div
         class="grid-cols-3 items-center text-min mt-2"
         :class="
-          !data.is_joined
-            ? 'flex justify-between w-full gap-2.5'
-            : 'grid gap-1'
+          !data.is_joined ? 'flex justify-between w-full gap-2.5' : 'grid gap-1'
         "
       >
         <template v-if="data?.is_joined">
@@ -70,10 +68,12 @@ defineProps({
           >
             <span
               class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+             
               >{{ data.progress }}%</span
             >
             <div
               class="bg-blue-500 rounded-l-2xl h-full"
+               :class="data.progress==100&&'rounded-r-2xl'"
               :style="{ width: data.progress + '%' }"
             ></div>
           </div>
