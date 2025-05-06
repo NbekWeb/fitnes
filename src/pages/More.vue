@@ -3,44 +3,49 @@ import tg from "@/components/Icons/tg.vue";
 import yt from "@/components/Icons/yt.vue";
 import insta from "@/components/Icons/insta.vue";
 import docs from "@/components/Icons/docs.vue";
-import mediaComp from "@/components/media.vue";
+import mediaComp from "@/components/mediaComp.vue";
 import settings from "@/components/Icons/settings.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, shallowRef } from "vue";
 import useMedia from "@/stores/media.pinia";
 import { storeToRefs } from "pinia";
 
 const mediaPinia = useMedia();
 const { medias } = storeToRefs(mediaPinia);
 
-const mediaData = ref([
+const mediaData = shallowRef([
   {
     icon: yt,
     label: "YouTube",
+    val: "youtube",
   },
   {
     icon: tg,
     label: "Telegram",
+    val: "telegram",
   },
   {
     icon: insta,
     label: "Instagram",
+    val: "instagram",
   },
 ]);
-
-const helps = ref({
+function goMediaLink(val) {
+  const media = medias.value?.find((m) => m.platform === val);
+  window.open(media?.url, "_blank");
+}
+const helps = shallowRef({
   icon: settings,
   label: "Техническая проблема",
 });
 
-const docData=ref({
-  icon:docs,
-  label:'Договор и политика'
-})
+const docData = shallowRef({
+  icon: docs,
+  label: "Договор и политика",
+});
 
-function goMedia(val){
+function goMedia(val) {
   window.open("https://t.me/arzumanov_r", "_blank");
 }
-
 
 onMounted(() => {
   mediaPinia.getMedia();
@@ -70,6 +75,7 @@ onMounted(() => {
             :data="item"
             :key="i"
             :border="i != 0"
+            @action="goMediaLink(item.val)"
           />
         </div>
       </div>
