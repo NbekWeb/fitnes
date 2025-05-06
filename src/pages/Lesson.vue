@@ -1,11 +1,9 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, nextTick } from "vue";
+import { ref, watch, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import useCourse from "@/stores/course.pinia";
 import useCore from "@/stores/core.pinia";
-import progressComp from "@/components/progress.vue";
-import showCourse from "@/components/showCourse.vue";
 import nextIcon from "@/components/Icons/next.vue";
 import start from "@/components/Icons/start.vue";
 
@@ -15,10 +13,11 @@ const router = useRouter();
 const core = useCore();
 const coursePinia = useCourse();
 const { loadingUrl } = storeToRefs(core);
-const { lesson } = storeToRefs(coursePinia);
+const { lesson, courses } = storeToRefs(coursePinia);
 const videoStarted = ref(false);
 const timeCode = ref(false);
 const videoRef = ref(null);
+const nextVideo = ref(null);
 
 const toggleTime = () => {
   timeCode.value = !timeCode.value;
@@ -30,25 +29,45 @@ const startVideo = () => {
   });
 };
 const goThisTime = (timestamp) => {
-    if (!videoStarted.value) {
-      videoStarted.value = true;
-    }
+  if (!videoStarted.value) {
+    videoStarted.value = true;
+  }
   if (!videoRef.value) return;
   const [hours, minutes, seconds] = timestamp.split(":").map(Number);
   const totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
   videoRef.value.currentTime = totalSeconds;
   videoRef.value.play();
-  console.log("dabba");
 };
 
-onMounted(() => {
-  if (!route.params.id) {
-    router.push({ name: "Dashboard" });
-  } else {
-    coursePinia.getLesson(route.params.id);
+function goNext(id) {
+  const nextId = JSON.parse(route.query.list || "[]");
+  const currentIndex = 0;
+
+  let remainingIds;
+  if (nextId.length) {
+    remainingIds = nextId.slice(currentIndex + 1);
+    router.push({
+      name: "Lesson",
+      params: { id },
+      query: {
+        list: JSON.stringify(remainingIds),
+      },
+    });
   }
-});
+}
+watch(
+  () => [route.params.id, route.query.list],
+  ([id, list]) => {
+    if (!!id) {
+      coursePinia.getLesson(id);
+      nextVideo.value = JSON.parse(list || "[]");
+    } else {
+      router.push({ name: "Dashboard" });
+    }
+  },
+  { immediate: true }
+);
 </script>
 <template>
   <a-spin :spinning="loadingUrl.has('lesson/detaile/')">
@@ -73,7 +92,12 @@ onMounted(() => {
         <p>
           {{ lesson.title }}
         </p>
-        <div v-if="lesson?.video_section?.length&&lesson?.video_section?.[0]?.timestamp">
+        <div
+          v-if="
+            lesson?.video_section?.length &&
+            lesson?.video_section?.[0]?.timestamp
+          "
+        >
           <div
             @click="toggleTime"
             class="flex font-semibold items-center gap-2 text-base"
@@ -99,6 +123,8 @@ onMounted(() => {
         </div>
       </div>
       <button
+        v-if="nextVideo?.length > 0"
+        @click="goNext(nextVideo?.[0])"
         class="w-full text-base flex gap-2 items-center bg-blue-500 justify-center h-10 rounded-3xl font-medium"
       >
         ДАЛЕЕ <nextIcon class="text-xl" />

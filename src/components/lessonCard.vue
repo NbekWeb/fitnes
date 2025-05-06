@@ -3,8 +3,26 @@ import check from "./Icons/check.vue";
 import start from "./Icons/start.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
 function goLesson(id) {
-  router.push({ name: "Lesson", params: { id } });
+  const currentIndex = props.nextVideo.findIndex(
+    (video) => Number(video.id) === id
+  );
+
+  let remainingIds;
+  if (currentIndex > -1) {
+    remainingIds = props.nextVideo
+      .slice(currentIndex + 1)
+      .map((video) => Number(video.id));
+  }
+ 
+  router.push({
+    name: "Lesson",
+    params: { id },
+    query: {
+      list: JSON.stringify(remainingIds),
+    },
+  });
 }
 const props = defineProps({
   data: {
@@ -14,6 +32,10 @@ const props = defineProps({
       id: 0,
       title: "",
     }),
+  },
+  nextVideo: {
+    type: Array,
+    default: [],
   },
 });
 </script>
@@ -27,7 +49,7 @@ const props = defineProps({
       </span>
       <span
         @click="goLesson(data.id)"
-        class="text-lg transition duration-300 opacity-60 "
+        class="text-lg transition duration-300 opacity-60"
       >
         <start />
       </span>

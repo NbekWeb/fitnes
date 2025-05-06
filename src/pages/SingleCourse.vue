@@ -6,6 +6,7 @@ import useCourse from "@/stores/course.pinia";
 import useCore from "@/stores/core.pinia";
 import progressComp from "@/components/progress.vue";
 import showCourse from "@/components/showCourse.vue";
+import lessonCard from "@/components/lessonCard.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -38,12 +39,15 @@ onMounted(() => {
       <progress-comp :progress="course.progress" />
       <div class="mt-4 flex flex-col gap-3">
         <template v-for="(item, i) in course?.course_lesson">
-          <showCourse
-            :opened="opened == i"
-            :data="item"
-            @show="changeOpened(i)"
-            @hide="changeOpened"
-          />
+          <template v-if="item?.lessons?.length">
+            <showCourse
+              :opened="opened == i"
+              :data="item"
+              @show="changeOpened(i)"
+              @hide="changeOpened"
+            />
+          </template>
+          <lessonCard v-else :data="item" />
         </template>
       </div>
     </div>

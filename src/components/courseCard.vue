@@ -29,9 +29,13 @@ function joinPremium(id) {
   });
 }
 function goCourse(id = 0) {
-  router.push({ name: "Course", params: { id } });
+  router.push({
+    name: "Course",
+    params: { id },
+  
+  });
 }
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     required: true,
