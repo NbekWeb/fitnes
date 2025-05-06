@@ -56,7 +56,17 @@ a {
     rgba(21, 21, 21, 0) 75%
   ) !important;
 }
-.ant-spin .ant-spin-dot-item{
-  background-color: #14429D;
+.ant-spin .ant-spin-dot-item {
+  background-color: #14429d;
 }
-
+.ant-drawer .ant-drawer-mask {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+}
+.ant-drawer .ant-drawer-content {
+  background: #121212;
+  color: #fff;
+}
+.ant-drawer .ant-drawer-body  {
+  padding: 10px;
+}

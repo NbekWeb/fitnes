@@ -9,40 +9,48 @@ const router = createRouter({
       path: "/",
       component: Main,
       name: "Main",
-      children:[
+      children: [
         {
-          path:'',
-          component:Dashboard,
-          name:'Dashboard'
-
-        }
-      ]
+          path: "",
+          component: Dashboard,
+          name: "Dashboard",
+        },
+      ],
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/pages/Login.vue') 
-    }
-    
+      path: "/course/:id",
+      name: "Course",
+      component: () => import("@/pages/SingleCourse.vue"),
+    },
+    {
+      path: "/lesson/:id",
+      name: "Lesson",
+      component: () => import("@/pages/Lesson.vue"),
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("@/pages/Login.vue"),
+    },
   ],
 });
 
-  router.beforeEach((to, from, next) => {
-    const accessToken = localStorage.getItem("access_token");
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem("access_token");
 
-    // document.title = to.meta.title || "Авторизоваться";
+  // document.title = to.meta.title || "Авторизоваться";
 
-    if (to.name === "login") {
-      return next();
-    }
+  if (to.name === "login") {
+    return next();
+  }
 
-    if (accessToken) {
-      return next();
-    } else {
-      return next({
-        name: "login"
-      });
-    }
-  });
+  if (accessToken) {
+    return next();
+  } else {
+    return next({
+      name: "login",
+    });
+  }
+});
 
 export default router;
