@@ -30,6 +30,7 @@ onMounted(() => {
   tg.BackButton.show();
   tg.BackButton.onClick(() => {
     router.push('/more');
+    console.log('dabba')
   });
 });
 </script>
