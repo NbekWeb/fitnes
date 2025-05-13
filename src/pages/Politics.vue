@@ -25,6 +25,7 @@ function download(fileUrl) {
 onMounted(() => {
   mediaPinia.getPolitics();
   const tg = window.Telegram.WebApp;
+   tg.ready();
 
   tg.BackButton.show();
   tg.BackButton.onClick(() => {
