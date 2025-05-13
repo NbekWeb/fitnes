@@ -18,6 +18,7 @@ function changeSelected(val) {
 function download(fileUrl) {
   const link = document.createElement("a");
   link.href = fileUrl;
+   link.target = "_blank";
   link.download = fileUrl.split("/").pop(); // Optional: use filename from URL
   document.body.appendChild(link);
   link.click();
