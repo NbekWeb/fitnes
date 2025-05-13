@@ -24,6 +24,9 @@ function download(fileUrl) {
 
 onMounted(() => {
   mediaPinia.getPolitics();
+  const tg = window.Telegram.WebApp;
+
+  tg.BackButton.show();
 });
 </script>
 <template>
@@ -50,7 +53,7 @@ onMounted(() => {
         @click="download(politics?.[selected]?.files)"
         class="w-full bg-blue-500 rounded-3xl text-base mt-5 h-10 font-semibold text-center flex justify-center items-center"
       >
-      Скачать файл
+        Скачать файл
       </button>
     </template>
   </div>
