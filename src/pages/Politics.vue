@@ -3,11 +3,11 @@ import useMedia from "@/stores/media.pinia";
 import useCore from "@/stores/core.pinia";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 
 const mediaPinia = useMedia();
 const core = useCore();
-const router=useRouter()
+const router = useRouter();
 const { loadingUrl } = storeToRefs(core);
 const { politics } = storeToRefs(mediaPinia);
 const selected = ref(0);
@@ -27,12 +27,16 @@ function download(fileUrl) {
 onMounted(() => {
   mediaPinia.getPolitics();
   const tg = window.Telegram.WebApp;
-   tg.ready();
+  tg.ready();
 
   tg.BackButton.show();
   tg.BackButton.onClick(() => {
-    router.push('/more');
+    router.push("/more");
   });
+});
+onUnmounted(() => {
+  const tg = window.Telegram.WebApp;
+  tg.BackButton.hide();
 });
 </script>
 <template>
