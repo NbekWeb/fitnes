@@ -2,7 +2,7 @@
 import support from "./Icons/support.vue";
 import home from "./Icons/home.vue";
 import add from "./Icons/add.vue";
-import { ref ,reactive} from "vue";
+import { ref, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import close from "./Icons/close.vue";
 
@@ -12,6 +12,7 @@ const mediaPinia = useMedia();
 const route = useRoute();
 const router = useRouter();
 const open = ref(false);
+const helpForm = ref();
 
 function onClose() {
   open.value = false;
@@ -43,7 +44,6 @@ function submitHelp() {
   helpForm.value.validate().then(() => {
     mediaPinia.postSupport({ description: formState.message }, () => {
       formState.message = "";
-      showFull();
     });
   });
 }
@@ -80,6 +80,7 @@ function submitHelp() {
       :closable="false"
       :open="open"
       @close="onClose"
+      height="auto"
     >
       <div class="">
         <h3 class="font-semibold text-xl">ПОМОЩЬ</h3>
@@ -89,7 +90,7 @@ function submitHelp() {
         >
           <close />
         </span>
-        <div>
+        <div class="pb-5">
           <a-form :model="formState" :rules="rules" ref="helpForm">
             <a-form-item name="message">
               <a-textarea
