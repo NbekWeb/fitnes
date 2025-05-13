@@ -186,6 +186,7 @@ const useCourse = defineStore("course", {
         })
         .finally(() => {
           core.loadingUrl.delete("payment/hook/");
+          localStorage.removeItem("premium");
         });
     },
   },

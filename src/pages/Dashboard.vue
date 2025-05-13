@@ -75,7 +75,7 @@ onMounted(() => {
         },
         () => {
           coursePinia.postCourse({ course: premium }, () => {
-            localStorage.removeItem("premium");
+            
           });
         }
       );

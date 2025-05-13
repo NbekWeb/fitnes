@@ -21,7 +21,7 @@ function goTo(val = "main") {
 </script>
 <template>
   <div
-    class="flex text-white text-sm px-5 font-medium fixed bottom-0 bg-black py-2.5  left-0 w-full items-center justify-between"
+    class="flex text-white text-sm px-5 font-medium fixed bottom-0 bg-black py-2.5 left-0 w-full items-center justify-between"
   >
     <div
       class="flex flex-col gap-2 items-center opacity-90"
