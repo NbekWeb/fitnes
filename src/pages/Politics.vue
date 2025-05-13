@@ -3,9 +3,11 @@ import useMedia from "@/stores/media.pinia";
 import useCore from "@/stores/core.pinia";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
+import {useRouter}
 
 const mediaPinia = useMedia();
 const core = useCore();
+const router=useRouter()
 const { loadingUrl } = storeToRefs(core);
 const { politics } = storeToRefs(mediaPinia);
 const selected = ref(0);
@@ -30,7 +32,6 @@ onMounted(() => {
   tg.BackButton.show();
   tg.BackButton.onClick(() => {
     router.push('/more');
-    console.log('dabba')
   });
 });
 </script>
