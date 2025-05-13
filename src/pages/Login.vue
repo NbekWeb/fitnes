@@ -17,6 +17,7 @@ onMounted(() => {
     router.push({ name: "Dashboard" });
   });
 });
+
 </script>
 <template>
   <div
