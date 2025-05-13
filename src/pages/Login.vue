@@ -20,7 +20,7 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="min-h-screen overflow-y-hidden w-full flex items-center justify-center"
+    class="min-h-dvh overflow-y-hidden w-full flex items-center justify-center"
   >
     <a-spin :spinning="true" size="large"></a-spin>
   </div>
