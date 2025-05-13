@@ -3,7 +3,7 @@ import useMedia from "@/stores/media.pinia";
 import useCore from "@/stores/core.pinia";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
-import {useRouter}
+import {useRouter} from 'vue-router'
 
 const mediaPinia = useMedia();
 const core = useCore();
