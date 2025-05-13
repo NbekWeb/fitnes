@@ -27,9 +27,8 @@ onMounted(() => {
   const tg = window.Telegram.WebApp;
 
   tg.BackButton.show();
-   tg.BackButton.onClick(() => {
-    
-    router.push({name:'More'})
+  tg.BackButton.onClick(() => {
+    router.push('/more');
   });
 });
 </script>
