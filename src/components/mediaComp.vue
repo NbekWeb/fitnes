@@ -27,7 +27,7 @@ function goAction() {
 <template>
   <div
     @click="goAction"
-    class="bg-black border-dark-270 p-2 rounded-lg flex justify-between items-center"
+    class="bg-black border-dark-270 p-2 rounded-lg flex justify-between items-center hover:cursor-pointer"
     :class="[border && 'border-t-2']"
   >
     <div class="flex items-center gap-2.5">
