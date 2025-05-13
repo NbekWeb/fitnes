@@ -34,7 +34,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="text-white px-2.5 py-4` overflow-y-hidden">
+  <div class="text-white px-2.5 py-4 overflow-y-hidden">
     <div
       class="flex w-full mb-10 overflow-x-auto h-auto overflow-y-hidden items-center gap-2"
     >
