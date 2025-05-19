@@ -74,9 +74,7 @@ onMounted(() => {
           event: "payment.succeeded",
         },
         () => {
-          coursePinia.postCourse({ course: premium }, () => {
-            
-          });
+          coursePinia.postCourse({ course: premium }, () => {});
         }
       );
     }
@@ -142,17 +140,12 @@ onMounted(() => {
         </template>
         <template v-if="courseDashoard?.length != 0">
           <template v-for="(item, i) in courseDashoard">
-            <template
-              v-if="
-                selectedCourse == 'my'
-                  ? !item?.course?.you_tube
-                  : !item.you_tube
-              "
-            >
+            
+              
+              
               <courseCard
                 :data="selectedCourse == 'my' ? item?.course : item"
               />
-            </template>
           </template>
         </template>
         <div

@@ -66,6 +66,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
+          console.log(data?.results)
           this.courseDashoard = data?.results;
         })
         .catch((error) => {})
