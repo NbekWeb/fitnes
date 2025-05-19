@@ -2,7 +2,7 @@
 import useMedia from "@/stores/media.pinia";
 import useCore from "@/stores/core.pinia";
 import { storeToRefs } from "pinia";
-import { onMounted, ref ,onUnmounted} from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 
 const mediaPinia = useMedia();
@@ -18,7 +18,7 @@ function changeSelected(val) {
 function download(fileUrl) {
   const link = document.createElement("a");
   link.href = fileUrl;
-   link.target = "_blank";
+  link.target = "_blank";
   link.download = fileUrl.split("/").pop(); // Optional: use filename from URL
   document.body.appendChild(link);
   link.click();
@@ -42,7 +42,6 @@ onUnmounted(() => {
 </script>
 <template>
   <a-spin :spinning="loadingUrl.has('contrack/politics/')">
-
     <div class="text-white px-2.5 py-4 overflow-y-hidden">
       <div
         class="flex w-full mb-10 overflow-x-auto h-auto overflow-y-hidden items-center gap-2"
