@@ -6,6 +6,7 @@ import useCourse from "@/stores/course.pinia";
 import useCore from "@/stores/core.pinia";
 import nextIcon from "@/components/Icons/next.vue";
 import start from "@/components/Icons/start.vue";
+import downloadIcon from "@/components/Icons/download.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -28,6 +29,13 @@ const startVideo = () => {
     videoRef.value?.play();
   });
 };
+function donloadFile(url) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = url.split("/").pop();
+  link.target = "_blank";
+  link.click();
+}
 const goThisTime = (timestamp) => {
   if (!videoStarted.value) {
     videoStarted.value = true;
@@ -109,9 +117,19 @@ onUnmounted(() => {
         />
       </div>
       <div class="bg-dark-120 rounded-lg p-2.5 text-sm mb-3">
-        <p>
-          {{ lesson.title }}
-        </p>
+        <div class="flex items-center gap-2 justify-between">
+          <p class="mb-0">
+            {{ lesson.title }}
+          </p>
+          <span
+            v-if="lesson.file"
+            class="flex hover:cursor-pointer text-blue-500 gap-1 text-sm items-center font-semibold"
+            @click="donloadFile(lesson.file)"
+          >
+            <download-icon class="text-base" />
+            Загрузка курса
+          </span>
+        </div>
         <div
           v-if="
             lesson?.video_section?.length &&

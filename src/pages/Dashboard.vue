@@ -130,7 +130,7 @@ onMounted(() => {
             :class="
               selectedCourse == item.id && 'border-white bg-white text-dark-100'
             "
-            @click="changeCourse(item.name)"
+            @click="changeCourse(item.id)"
           >
             {{ item.name }}
           </button>
@@ -160,9 +160,7 @@ onMounted(() => {
                   : !item.you_tube
               "
             >
-              <courseCard
-                :data="selectedCourse == 'my' ? item?.course : item"
-              />
+            <courseCard :data="selectedCourse == 'my' ? item?.course : item" />
             </template>
           </template>
         </template>

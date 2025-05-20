@@ -54,6 +54,7 @@ const props = defineProps({
 
 <template>
   <div class="bg-dark-310 p-2.5 cursor-pointer rounded-xl flex gap-2">
+   
     <img class="w-26 h-26 object-cover rounded-lg" :src="data.image" />
 
     <div class="flex h-full flex-col justify-between flex-1">

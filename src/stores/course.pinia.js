@@ -52,6 +52,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
+          this.courseDashoard = null;
           this.courseDashoard = data?.results;
         })
         .catch((error) => {})
@@ -67,7 +68,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
-          e.log(data?.results);
+          this.courseDashoard = null;
           this.courseDashoard = data?.results;
         })
         .catch((error) => {})
@@ -83,6 +84,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
+             this.courseDashoard = null;
           this.courseDashoard = data.results;
         })
         .catch((error) => {})
@@ -98,6 +100,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
+          this.courseDashoard = null;
           this.courseDashoard = data;
         })
         .catch((error) => {})
