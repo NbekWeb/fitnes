@@ -21,7 +21,7 @@ function join(id) {
 }
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
-    // localStorage.setItem("premium", id);
+    localStorage.setItem("premium", id);
     window.location.href = url;
     // setTimeout(() => {
     //   if (window.Telegram && Telegram.WebApp) {
