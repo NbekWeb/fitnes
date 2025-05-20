@@ -1,12 +1,14 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted ,onUnmounted} from "vue";
 import { storeToRefs } from "pinia";
 import useCourse from "@/stores/course.pinia";
 import useCore from "@/stores/core.pinia";
 import progressComp from "@/components/progress.vue";
 import showCourse from "@/components/showCourse.vue";
 import lessonCard from "@/components/lessonCard.vue";
+import downloadIcon from "@/components/Icons/download.vue";
+import chevron from "@/components/Icons/chevron.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -20,6 +22,13 @@ const opened = ref(-1);
 function changeOpened(val = -1) {
   opened.value = val;
 }
+function donloadFile(url) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = url.split("/").pop();
+  link.target = "_blank";
+  link.click();
+}
 
 onMounted(() => {
   if (!route.params.id) {
@@ -27,6 +36,17 @@ onMounted(() => {
   } else {
     coursePinia.getCourse(route.params.id);
   }
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  tg.BackButton.show();
+  tg.BackButton.onClick(() => {
+    router.push({ name: "Dashboard" });
+  });
+});
+onUnmounted(() => {
+  const tg = window.Telegram.WebApp;
+  tg.BackButton.hide();
 });
 </script>
 <template>
@@ -49,6 +69,25 @@ onMounted(() => {
           </template>
           <lessonCard v-else :data="item" />
         </template>
+        <div class="flex mt-3 gap-5 items-center justify-between">
+          <button
+            v-if="course.file"
+            class="flex hover:cursor-pointer gap-1 text-sm items-center font-semibold"
+            @click="donloadFile(course.file)"
+          >
+            <download-icon class="text-base" />
+            Загрузка курса
+          </button>
+          <a
+            v-if="course.link"
+            :href="course.link"
+            class="flex hover:cursor-pointer gap-1 text-sm items-center font-semibold text-white bg-blue-500 px-2.5 rounded-2xl py-1"
+            target="_blank"
+          >
+            Перейти по ссылке
+            <chevron class="text-base" />
+          </a>
+        </div>
       </div>
     </div>
   </a-spin>

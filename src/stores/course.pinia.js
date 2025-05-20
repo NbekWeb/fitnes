@@ -11,6 +11,7 @@ const useCourse = defineStore("course", {
     lesson: {},
     courses: [],
     courseAll: [],
+    sections: [],
   }),
   actions: {
     getRecomendation() {
@@ -66,7 +67,7 @@ const useCourse = defineStore("course", {
         method: "GET",
       })
         .then(({ data }) => {
-          console.log(data?.results)
+          e.log(data?.results);
           this.courseDashoard = data?.results;
         })
         .catch((error) => {})
@@ -87,6 +88,36 @@ const useCourse = defineStore("course", {
         .catch((error) => {})
         .finally(() => {
           core.loadingUrl.delete("courseDashoard");
+        });
+    },
+    getCourseSection(id) {
+      const core = useCore();
+      core.loadingUrl.add("courseDashoard");
+      api({
+        url: `course/by/section/${id}/`,
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.courseDashoard = data;
+        })
+        .catch((error) => {})
+        .finally(() => {
+          core.loadingUrl.delete("courseDashoard");
+        });
+    },
+    getSections() {
+      const core = useCore();
+      core.loadingUrl.add("course/section/");
+      api({
+        url: "course/section/",
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.sections = data;
+        })
+        .catch((error) => {})
+        .finally(() => {
+          core.loadingUrl.delete("course/section/");
         });
     },
 
@@ -146,8 +177,7 @@ const useCourse = defineStore("course", {
         .then(({ data }) => {
           callback();
         })
-        .catch((error) => {
-          })
+        .catch((error) => {})
         .finally(() => {
           core.loadingUrl.delete("course/user/");
         });
@@ -179,8 +209,8 @@ const useCourse = defineStore("course", {
         data,
       })
         .then(({ data }) => {
-          message.success('Курс успешно приобретён!')
-          callback()
+          message.success("Курс успешно приобретён!");
+          callback();
         })
         .catch((error) => {
           message.error("Что-то пошло не так!");

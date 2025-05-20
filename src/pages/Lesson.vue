@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 import { storeToRefs } from "pinia";
 import useCourse from "@/stores/course.pinia";
 import useCore from "@/stores/core.pinia";
@@ -68,24 +68,44 @@ watch(
   },
   { immediate: true }
 );
+onMounted(() => {
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  tg.BackButton.show();
+  tg.BackButton.onClick(() => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      router.push({ name: "Dashboard" });
+    }
+  });
+});
+
+onUnmounted(() => {
+  const tg = window.Telegram.WebApp;
+  tg.BackButton.hide();
+});
 </script>
 <template>
   <a-spin :spinning="loadingUrl.has('lesson/detaile/')">
     <div class="min-h-dvh text-white px-2.5 py-3">
       <div class="w-full mt-2 mb-4">
         <img
+          v-if="lesson.image"
           v-show="!videoStarted"
           class="w-full rounded-lg cursor-pointer"
           :src="lesson.image"
           @click="startVideo"
         />
+
         <video
-          v-show="videoStarted"
+          v-show="videoStarted || !lesson.image"
           class="w-full rounded-lg"
           :src="lesson.video"
           ref="videoRef"
           controls
-          controlsList="nodownload "
+          controlsList="nodownload"
         />
       </div>
       <div class="bg-dark-120 rounded-lg p-2.5 text-sm mb-3">

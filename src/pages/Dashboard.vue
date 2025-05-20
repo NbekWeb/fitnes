@@ -19,7 +19,7 @@ const core = useCore();
 const coursePinia = useCourse();
 const router = useRouter();
 
-const { recomendations, courseDashoard } = storeToRefs(coursePinia);
+const { recomendations, courseDashoard, sections } = storeToRefs(coursePinia);
 const { loadingUrl } = storeToRefs(core);
 const { user } = storeToRefs(auth);
 
@@ -27,16 +27,16 @@ const less = ref(false);
 const selectedCourse = ref("my");
 const courses = [
   {
-    val: "my",
-    label: "Мои ",
+    id: "my",
+    name: "Мои ",
   },
   {
-    val: "free",
-    label: "Бесплатно  ",
+    id: "free",
+    name: "Бесплатно  ",
   },
   {
-    val: "premium",
-    label: "Платно  ",
+    id: "premium",
+    name: "Платно  ",
   },
 ];
 
@@ -50,14 +50,16 @@ function goCourse(id, youtube) {
 function giveLess() {
   less.value = !less.value;
 }
-function changeCourse(val) {
-  selectedCourse.value = val;
-  if (val == "my") {
+function changeCourse(id) {
+  selectedCourse.value = id;
+  if (id == "my") {
     coursePinia.getCourseUser();
-  } else if (val == "free") {
+  } else if (id == "free") {
     coursePinia.getCourseFree();
-  } else {
+  } else if (id == "premium") {
     coursePinia.getCoursePremium();
+  } else {
+    coursePinia.getCourseSection(id);
   }
 }
 
@@ -82,6 +84,7 @@ onMounted(() => {
   coursePinia.getRecomendation();
   coursePinia.getCourseAll();
   coursePinia.getCourseUser();
+  coursePinia.getSections();
 });
 </script>
 <template>
@@ -125,12 +128,22 @@ onMounted(() => {
           <button
             class="px-4 flex items-center min-w-max h-8 rounded-2xl border bg-dark-100 border-dark-200"
             :class="
-              selectedCourse == item.val &&
-              'border-white bg-white text-dark-100'
+              selectedCourse == item.id && 'border-white bg-white text-dark-100'
             "
-            @click="changeCourse(item.val)"
+            @click="changeCourse(item.name)"
           >
-            {{ item.label }}
+            {{ item.name }}
+          </button>
+        </template>
+        <template v-for="item in sections">
+          <button
+            class="px-4 flex items-center min-w-max h-8 rounded-2xl border bg-dark-100 border-dark-200"
+            :class="
+              selectedCourse == item.id && 'border-white bg-white text-dark-100'
+            "
+            @click="changeCourse(item.id)"
+          >
+            {{ item.name }}
           </button>
         </template>
       </div>
@@ -140,12 +153,17 @@ onMounted(() => {
         </template>
         <template v-if="courseDashoard?.length != 0">
           <template v-for="(item, i) in courseDashoard">
-            
-              
-              
+            <template
+              v-if="
+                selectedCourse == 'my'
+                  ? !item?.course?.you_tube
+                  : !item.you_tube
+              "
+            >
               <courseCard
                 :data="selectedCourse == 'my' ? item?.course : item"
               />
+            </template>
           </template>
         </template>
         <div
