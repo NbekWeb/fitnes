@@ -21,18 +21,8 @@ function join(id) {
 }
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
-    // localStorage.setItem("premium", id);
-    const link = document.createElement("a");
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.click();
-
-    // setTimeout(() => {
-    //   if (window.Telegram && Telegram.WebApp) {
-    //     Telegram.WebApp.close();
-    //   }
-    // }, 0);
+    localStorage.setItem("premium", id);
+    window.location.href = url;
   });
 }
 function goCourse(id = 0) {
