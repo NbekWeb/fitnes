@@ -21,17 +21,17 @@ function join(id) {
 }
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
-    localStorage.setItem("premium", id);
+    // localStorage.setItem("premium", id);
     const link = document.createElement("a");
     link.href = url;
     link.download = url.split("/").pop();
     link.target = "_blank";
     link.click();
-    setTimeout(() => {
-      if (window.Telegram && Telegram.WebApp) {
-        Telegram.WebApp.close();
-      }
-    }, 0);
+    // setTimeout(() => {
+    //   if (window.Telegram && Telegram.WebApp) {
+    //     Telegram.WebApp.close();
+    //   }
+    // }, 0);
   });
 }
 function goCourse(id = 0) {
