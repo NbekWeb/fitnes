@@ -23,16 +23,17 @@ function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
     localStorage.setItem("premium", id);
     window.open(url);
-    if (window.Telegram && Telegram.WebApp) {
-      Telegram.WebApp.close();
-    }
+    setTimeout(() => {
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.close();
+      }
+    }, 500);
   });
 }
 function goCourse(id = 0) {
   router.push({
     name: "Course",
     params: { id },
-  
   });
 }
 const props = defineProps({
@@ -54,7 +55,6 @@ const props = defineProps({
 
 <template>
   <div class="bg-dark-310 p-2.5 cursor-pointer rounded-xl flex gap-2">
-   
     <img class="w-26 h-26 object-cover rounded-lg" :src="data.image" />
 
     <div class="flex h-full flex-col justify-between flex-1">
