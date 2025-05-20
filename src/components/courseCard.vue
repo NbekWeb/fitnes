@@ -22,12 +22,16 @@ function join(id) {
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
     localStorage.setItem("premium", id);
-    window.location.href = url;
-    // setTimeout(() => {
-    //   if (window.Telegram && Telegram.WebApp) {
-    //     Telegram.WebApp.close();
-    //   }
-    // }, 100);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = url.split("/").pop();
+    link.target = "_blank";
+    link.click();
+    setTimeout(() => {
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.close();
+      }
+    }, 0);
   });
 }
 function goCourse(id = 0) {
