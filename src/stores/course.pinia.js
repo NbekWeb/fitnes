@@ -213,6 +213,7 @@ const useCourse = defineStore("course", {
       })
         .then(({ data }) => {
           message.success("Курс успешно приобретён!");
+          this.getCourseUser()
           callback();
         })
         .catch((error) => {
