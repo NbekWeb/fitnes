@@ -22,7 +22,7 @@ function join(id) {
 function joinPremium(id) {
   course.postPremium({ course_id: id }, (url) => {
     localStorage.setItem("premium", id);
-    window.location.href = url;
+    Telegram.WebApp.openLink(url);
   });
 }
 function goCourse(id = 0) {
