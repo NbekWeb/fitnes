@@ -98,7 +98,7 @@ onUnmounted(() => {
 <template>
   <a-spin :spinning="loadingUrl.has('lesson/detaile/')">
     <div class="min-h-dvh text-white px-2.5 py-3">
-      <div class="w-full mt-2 mb-4">
+      <div class="w-full mt-2 mb-4" v-if="lesson.video">
         <img
           v-if="lesson.image"
           v-show="!videoStarted"
