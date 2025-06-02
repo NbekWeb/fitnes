@@ -133,7 +133,8 @@ onUnmounted(() => {
         <div
           v-if="
             lesson?.video_section?.length &&
-            lesson?.video_section?.[0]?.timestamp
+            lesson?.video_section?.[0]?.timestamp &&
+            lesson?.video
           "
         >
           <div
