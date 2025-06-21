@@ -102,14 +102,14 @@ onUnmounted(() => {
         <img
           v-if="lesson.image"
           v-show="!videoStarted"
-          class="w-full rounded-lg cursor-pointer"
+          class="w-full rounded-lg cursor-pointer h-[200px] object-cover"
           :src="lesson.image"
           @click="startVideo"
         />
 
         <video
           v-show="videoStarted || !lesson.image"
-          class="w-full rounded-lg"
+          class="w-full rounded-lg h-[200px] object-cover"
           :src="lesson.video"
           ref="videoRef"
           controls
@@ -161,6 +161,9 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
+      <p class="mt-2  text-sm opacity-60">
+        {{ lesson.description }}
+      </p>
       <button
         v-if="nextVideo?.length > 0"
         @click="goNext(nextVideo?.[0])"

@@ -42,7 +42,7 @@ const courses = [
 
 function goCourse(id, youtube) {
   if (!youtube) {
-    router.push({ name: "SingleCourse", params: id });
+    router.push({ name: "Course", params: {id} });
   } else {
     window.open(youtube, "_blank");
   }
